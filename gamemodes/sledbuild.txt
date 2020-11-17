@@ -1,0 +1,7 @@
+"sledbuild"
+{
+	"base"		"base"
+	"title"		"SledBuild"
+	"maps"		"^slb_"
+	"menusystem"	"1"
+}
