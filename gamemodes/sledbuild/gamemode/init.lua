@@ -7,4 +7,5 @@ include("sv_round.lua")
 util.AddNetworkString("SBStartRound")
 
 -- Send required files to clients
+AddCSLuaFile("cl_spawnmenu.lua")
 AddCSLuaFile("shared.lua")
