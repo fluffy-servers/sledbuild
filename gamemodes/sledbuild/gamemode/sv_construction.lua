@@ -1,5 +1,7 @@
--- todo: make convar
-MAX_PROP_RADIUS = 128
+if SERVER then
+    CreateConVar("slb_max_prop_radius", 128, FCVAR_ARCHIVE, "Max prop radius, any props larger than the set radius will be removed")
+
+end
 
 -- Allowed vehicle types
 local allowed_vehicles = {
@@ -56,9 +58,11 @@ function GM:PlayerSpawnProp(ply, model)
 end
 
 function GM:PlayerSpawnedProp(ply, model, prop)
-    if prop:BoundingRadius() > MAX_PROP_RADIUS then
+    local max_radius = GetConVar("slb_max_prop_radius"):GetInt()
+    if prop:BoundingRadius() > max_radius then
         prop:Remove()
         ply:ChatPrint("That prop is too large!")
+        sound.Play("HL1/fvox/beep.wav", ply:GetPos(), 75, 80, 130)
         return
     end
 
