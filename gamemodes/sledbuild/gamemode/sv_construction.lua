@@ -12,10 +12,28 @@ local allowed_vehicles = {
     ["Seat_Jeep"] = true
 }
 
-function GM:CanTool(ply, trace, mode)
+local allowed_tools = {
+    ["weld"] = true,
+    ["remover"] = true,
+    ["camera"] = true,
+    ["colour"] = true,
+    ["material"] = true,
+    ["trail"] = true,
+    ["axis"] = true,
+    ["rope"] = true
+}
+
+-- Only allow whitelisted tools
+function GM:CanTool(ply, trace, tool)
     -- TODO: Restrict tools on anything except our own entities
-    -- TODO: Restrict most tool types
+    if not allowed_tools[tool] then
+        ply:ChatPrint("That tool is not allowed")
+        sound.Play("HL1/fvox/beep.wav", ply:GetPos(), 75, 80, 130)
+        return false
+        end
+    if allowed_tools[tool] then
     return true
+    end
 end
 
 function GM:PlayerSpawnProp(ply, model)
@@ -41,6 +59,7 @@ end
 function GM:PlayerSpawnVehicle(ply, model, name)
     if not allowed_vehicles[name] then
         ply:ChatPrint("That vehicle is not allowed - try a chair")
+        sound.Play("HL1/fvox/beep.wav", ply:GetPos(), 75, 80, 130)
         return false
     end
 
