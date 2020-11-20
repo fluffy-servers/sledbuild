@@ -23,6 +23,11 @@ local allowed_tools = {
     ["rope"] = true
 }
 
+local blacklisted_props = {
+    ["models/props_c17/oildrum001_explosive.mdl"] = true,
+    ["models/props_junk/propane_tank001a.mdl"] = true
+}
+
 -- Only allow whitelisted tools
 function GM:CanTool(ply, trace, tool)
     -- TODO: Restrict tools on anything except our own entities
@@ -36,8 +41,14 @@ function GM:CanTool(ply, trace, tool)
     end
 end
 
+-- Don't allow blacklisted props
 function GM:PlayerSpawnProp(ply, model)
-    -- TODO: Prop blacklisting
+    if blacklisted_props[model] then
+        ply:ChatPrint("That prop is blacklisted!")
+        sound.Play("HL1/fvox/beep.wav", ply:GetPos(), 75, 80, 130)
+        return false
+    end
+
     if ply:GetNWBool("Racing") then
         return false
     end
