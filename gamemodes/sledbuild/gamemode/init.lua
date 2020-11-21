@@ -11,3 +11,12 @@ util.AddNetworkString("SBStartRound")
 AddCSLuaFile("cl_spawnmenu.lua")
 AddCSLuaFile("shared.lua")
 AddCSLuaFile("sh_convars.lua")
+
+function GM:PlayerLoadout(ply)
+    ply:StripWeapons()
+    ply:StripAmmo()
+
+    ply:Give("weapon_physgun")
+    ply:Give("gmod_tool")
+    ply:Give("gmod_camera")
+end

@@ -4,6 +4,8 @@ function GM:StartRound()
     net.Start("SBStartRound")
     net.Broadcast()
 
+    PrintMessage(3, "The race has begun!")
+
     -- Handle round pushing
     self:EnableRoundPush()
     timer.Simple(10, self.DisableRoundPush)
@@ -20,7 +22,7 @@ function GM:EnableRoundPush()
     end
 end
 
--- Disable the "pusher" at the start of a round
+-- Disable the "pusher" at the end of a round
 function GM:DisableRoundPush()
     for _, v in pairs(ents.FindByName("Pusher")) do
         v:Fire("Disable", "", "0")
