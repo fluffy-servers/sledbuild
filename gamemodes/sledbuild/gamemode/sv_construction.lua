@@ -1,8 +1,3 @@
-if SERVER then
-    CreateConVar("slb_max_prop_radius", 128, FCVAR_ARCHIVE, "Max prop radius, any props larger than the set radius will be removed")
-
-end
-
 -- Allowed vehicle types
 local allowed_vehicles = {
     ["Chair_Office1"] = true,
