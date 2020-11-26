@@ -105,3 +105,8 @@ end
 function GM:PlayerSpawnSWEP()
     return false
 end
+
+-- Disable giving weapons
+function GM:PlayerGiveSWEP()
+    return false
+end
