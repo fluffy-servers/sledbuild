@@ -22,6 +22,6 @@ function GM:PlayerLoadout(ply)
 end
 
 hook.Add("Initialize", "StartFirstSledbuildRound", function()
-    local time = GetConVar("slb_construction_time"):GetInt() or 0
-    timer.Create("SledbuildRoundStart", time, 1, self.StartRound)
+    local time = GetConVar("slb_construction_time"):GetInt() or 120
+    timer.Create("SledbuildRoundStart", time, 1, GAMEMODE.StartRound)
 end)

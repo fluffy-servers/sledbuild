@@ -1,7 +1,7 @@
 -- All ConVars go in here
 
 -- Shared ConVars
-    CreateConVar("slb_construction_time", 180, FCVAR_ARCHIVE + FCVAR_REPLICATED, "The construction time given before a race starts")
+    CreateConVar("slb_construction_time", 180, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Time, in seconds, between races")
     CreateConVar("slb_race_time", 60, FCVAR_ARCHIVE + FCVAR_REPLICATED, "The duration of a race")
 
 if SERVER then

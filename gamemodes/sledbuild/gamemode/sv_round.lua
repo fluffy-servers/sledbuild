@@ -1,5 +1,5 @@
 function GM:GetNextRaceNumber()
-    GetGlobalInt("NextRace", 1)
+    return GetGlobalInt("NextRace", 1)
 end
 
 function GM:UpdateNextRaceNumber()
@@ -12,30 +12,33 @@ function GM:StartRound()
 
     -- Network to clients
     net.Start("SBStartRound")
-        net.WriteInt(self:GetNextRaceNumber())
+        net.WriteInt(GAMEMODE:GetNextRaceNumber(), 16)
     net.Broadcast()
 
     -- Handle round pushing
-    self:EnableRoundPush()
-    timer.Simple(10, self.DisableRoundPush)
+    GAMEMODE:EnableRoundPush()
+    timer.Simple(10, GAMEMODE.DisableRoundPush)
 
     -- Setup timer to kill the round
     local racetime = GetConVar("slb_race_time"):GetInt() or 60
-    timer.Create("SledbuildRoundEnd", racetime, 1, self.EndRound)
+    if racetime < 10 then racetime = 10 end
+    timer.Create("SledbuildRoundEnd", racetime, 1, GAMEMODE.EndRound)
 end
 
 function GM:EndRound()
     timer.Stop("SledbuildRoundEnd")
 
     -- Increment the race number
-    self:UpdateNextRaceNumber()
+    GAMEMODE:UpdateNextRaceNumber()
     
     -- Prepare for the next race
-    local time_til_next_race = GetConVar("slb_construction_time"):GetInt() or 0
+    local race_duration = GetConVar("slb_race_time"):GetInt() or 60
+    local time_between_races = GetConVar("slb_construction_time"):GetInt() or 120
+    local time_til_next_race = time_between_races - race_duration
     if time_til_next_race <= 0 then
-        self:StartRound()
+        GAMEMODE:StartRound()
     else
-        timer.Create("SledbuildRoundStart", time_til_next_race, 1, self.StartRound)
+        timer.Create("SledbuildRoundStart", time_til_next_race, 1, GAMEMODE.StartRound)
     end
 end
 
