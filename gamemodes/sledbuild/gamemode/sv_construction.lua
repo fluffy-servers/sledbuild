@@ -9,17 +9,6 @@ local allowed_vehicles = {
     ["Seat_Jeep"] = true
 }
 
-local allowed_tools = {
-    ["weld"] = true,
-    ["remover"] = true,
-    ["camera"] = true,
-    ["colour"] = true,
-    ["material"] = true,
-    ["trail"] = true,
-    ["axis"] = true,
-    ["rope"] = true
-}
-
 local blacklisted_props = {
     ["models/props_c17/oildrum001_explosive.mdl"] = true,
     ["models/props_junk/propane_tank001a.mdl"] = true
@@ -28,14 +17,12 @@ local blacklisted_props = {
 -- Only allow whitelisted tools
 function GM:CanTool(ply, trace, tool)
     -- TODO: Restrict tools on anything except our own entities
-    if not allowed_tools[tool] then
+    if not GAMEMODE.AllowedTools[tool] then
         ply:ChatPrint("That tool is not allowed")
         sound.Play("HL1/fvox/beep.wav", ply:GetPos(), 75, 80, 130)
         return false
         end
-    if allowed_tools[tool] then
     return true
-    end
 end
 
 -- Don't allow blacklisted props
