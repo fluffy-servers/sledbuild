@@ -63,3 +63,24 @@ function GM:DisableRoundPush()
         v:Fire("Enable", "", "0")
     end
 end
+
+-- Call when a player has crossed the finish line
+function GM:CrossFinish(ent)
+    -- Todo: properly track finishes and all that fun jazz
+    -- For now we just treat everyone like winners
+    local finishpos = 1
+    local destination = GAMEMODE:GetDestinationPosition(finishpos)
+    local vehicle = ent:GetVehicle()
+    GAMEMODE:RelocateSled(vehicle, destination)
+end
+
+-- Relocate a sled to a new position
+-- This should specify the vehicle/chair to move
+function GM:RelocateSled(vehicle, pos)
+    local basepos = vehicle:GetPos()
+    local constrained = constraint.GetAllConstrainedEntities(vehicle)
+    for _, component in (constrained) do
+        component:SetPos(pos + (component:GetPos() - basepos)) -- calculate offset
+        component:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER) -- do we need this?
+    end
+end
