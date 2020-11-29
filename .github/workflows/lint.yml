@@ -2,21 +2,17 @@
 name: GLua Lint
 
 # Controls when the action will run.
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: [ push, pull_request ]
 
 jobs:
   lua_lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: rafraser/action-glua-lint@master
+      - uses: TASSIA710/action-glua-lint@master
         with:
           failOnWarning: true
-          directory: /
+          directory: /gamemodes/
           lint_unusedParameters: false
           lint_unusedLoopVars: false
           lint_whitespaceStyle: false
