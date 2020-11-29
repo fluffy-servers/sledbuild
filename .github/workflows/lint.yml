@@ -16,7 +16,7 @@ jobs:
       - uses: rafraser/action-glua-lint@master
         with:
           failOnWarning: true
-          directory: /
+          directory: gamemodes/
           lint_unusedParameters: false
           lint_unusedLoopVars: false
           lint_whitespaceStyle: false
