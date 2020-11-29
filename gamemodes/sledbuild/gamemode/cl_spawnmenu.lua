@@ -21,7 +21,6 @@ function GM:GetVehicleInfo(name)
 end
 
 hook.Add("PopulatePropMenu", "SledbuildTestCategory", function()
-    local base_vehicles = list.Get("Vehicles")
     local contents = {
         {type = "header", text = "Props"},
         {type = "model", model = "models/props_c17/oildrum001.mdl"},

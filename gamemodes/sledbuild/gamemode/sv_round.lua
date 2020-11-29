@@ -30,7 +30,7 @@ function GM:EndRound()
 
     -- Increment the race number
     GAMEMODE:UpdateNextRaceNumber()
-    
+
     -- Prepare for the next race
     local race_duration = GetConVar("slb_race_time"):GetInt() or 60
     local time_between_races = GetConVar("slb_construction_time"):GetInt() or 120
@@ -79,7 +79,7 @@ end
 function GM:RelocateSled(vehicle, pos)
     local basepos = vehicle:GetPos()
     local constrained = constraint.GetAllConstrainedEntities(vehicle)
-    for _, component in (constrained) do
+    for _, component in pairs(constrained) do
         component:SetPos(pos + (component:GetPos() - basepos)) -- calculate offset
         component:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER) -- do we need this?
     end

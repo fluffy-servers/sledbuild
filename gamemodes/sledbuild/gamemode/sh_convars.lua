@@ -10,5 +10,5 @@ if SERVER then
 
 elseif CLIENT then
     -- Client side ConVars
-
+    return
 end

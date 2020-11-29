@@ -12,7 +12,7 @@ function ENT:StartTouch(ent)
         if not IsValid(vehicle) then return end
 
         GAMEMODE:CrossFinish(vehicle)
-    elseif ent:IsVehicle() and !IsValid(ent:GetDriver()) then
+    elseif ent:IsVehicle() and not IsValid(ent:GetDriver()) then
         -- Recover lost sleds
         local destination = GAMEMODE:GetDestinationPosition(-1)
         GAMEMODE:RelocateSled(ent, destination)
