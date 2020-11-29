@@ -4,9 +4,9 @@ name: GLua Lint
 # Controls when the action will run.
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   lua_lint:
