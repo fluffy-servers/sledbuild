@@ -16,7 +16,7 @@ jobs:
       - uses: TASSIA710/action-glua-lint@v1.1.1
         with:
           failOnWarning: true
-          directory: gamemodes/
+          directory: /gamemodes/
           lint_unusedParameters: false
           lint_unusedLoopVars: false
           lint_whitespaceStyle: false
