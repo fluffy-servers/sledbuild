@@ -1,6 +1,3 @@
--- todo: make convar
-MAX_PROP_RADIUS = 128
-
 -- Allowed vehicle types
 local allowed_vehicles = {
     ["Chair_Office1"] = true,
@@ -12,14 +9,43 @@ local allowed_vehicles = {
     ["Seat_Jeep"] = true
 }
 
-function GM:CanTool(ply, trace, mode)
+local allowed_tools = {
+    ["weld"] = true,
+    ["remover"] = true,
+    ["camera"] = true,
+    ["colour"] = true,
+    ["material"] = true,
+    ["trail"] = true,
+    ["axis"] = true,
+    ["rope"] = true
+}
+
+local blacklisted_props = {
+    ["models/props_c17/oildrum001_explosive.mdl"] = true,
+    ["models/props_junk/propane_tank001a.mdl"] = true
+}
+
+-- Only allow whitelisted tools
+function GM:CanTool(ply, trace, tool)
     -- TODO: Restrict tools on anything except our own entities
-    -- TODO: Restrict most tool types
+    if not allowed_tools[tool] then
+        ply:ChatPrint("That tool is not allowed")
+        sound.Play("HL1/fvox/beep.wav", ply:GetPos(), 75, 80, 130)
+        return false
+        end
+    if allowed_tools[tool] then
     return true
+    end
 end
 
+-- Don't allow blacklisted props
 function GM:PlayerSpawnProp(ply, model)
-    -- TODO: Prop blacklisting
+    if blacklisted_props[model] then
+        ply:ChatPrint("That prop is blacklisted!")
+        sound.Play("HL1/fvox/beep.wav", ply:GetPos(), 75, 80, 130)
+        return false
+    end
+
     if ply:GetNWBool("Racing") then
         return false
     end
@@ -27,9 +53,11 @@ function GM:PlayerSpawnProp(ply, model)
 end
 
 function GM:PlayerSpawnedProp(ply, model, prop)
-    if prop:BoundingRadius() > MAX_PROP_RADIUS then
+    local max_radius = GetConVar("slb_max_prop_radius"):GetInt()
+    if prop:BoundingRadius() > max_radius then
         prop:Remove()
         ply:ChatPrint("That prop is too large!")
+        sound.Play("HL1/fvox/beep.wav", ply:GetPos(), 75, 80, 130)
         return
     end
 
@@ -41,6 +69,7 @@ end
 function GM:PlayerSpawnVehicle(ply, model, name)
     if not allowed_vehicles[name] then
         ply:ChatPrint("That vehicle is not allowed - try a chair")
+        sound.Play("HL1/fvox/beep.wav", ply:GetPos(), 75, 80, 130)
         return false
     end
 
@@ -74,5 +103,10 @@ end
 
 -- Disable spawning weapons
 function GM:PlayerSpawnSWEP()
+    return false
+end
+
+-- Disable giving weapons
+function GM:PlayerGiveSWEP()
     return false
 end
