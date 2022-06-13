@@ -48,6 +48,6 @@ hook.Add("InitPostEntity", "PrepareDestinationLocations", function()
 
     GAMEMODE.LoseDestinations = {}
     for _, ent in pairs(ents.FindByName("Destination_Lose*")) do
-        table.insert(GAMEMDOE.LoseDestinations, ent:GetPos())
+        table.insert(GAMEMODE.LoseDestinations, ent:GetPos())
     end
 end)
